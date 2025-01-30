@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuerdos Especiales</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(120deg, #ff9a9e, #fad0c4);
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+        }
+        h1 {
+            color: #d6336c;
+        }
+        .hidden {
+            display: none;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin-top: 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            background: #ff4081;
+            color: white;
+        }
+        .memories {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .memories div {
+            position: relative;
+            max-width: 100%;
+        }
+        .memories img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+            max-height: 300px;
+            object-fit: cover;
+        }
+        .memories button {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 64, 129, 0.8);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        .importantButton {
+            background-color: #ff4081;
+            margin-top: 10px;
+        }
+        .memoryDetail {
+            margin-top: 20px;
+            text-align: left;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="dateContainer">
+        <h1>Ingresa la fecha de nuestro comienzo:</h1>
+        <input type="date" id="dateInput">
+        <button onclick="checkDate()">Enviar</button>
+        <p id="errorMsg" style="color:red; display:none;">Fecha incorrecta, intenta de nuevo.</p>
+    </div>
+
+    <div class="container hidden" id="memoriesContainer">
+        <h1>Desde ese día especial...</h1>
+        <div class="memories">
+            <div>
+                <img src="img/imagen01.jpg.jpeg" alt="Recuerdo 1">
+                <button onclick="showMemory(1)">Ver más</button>
+            </div>
+            <div>
+                <img src="img/imagen02.jpg.jpeg" alt="Recuerdo 2">
+                <button onclick="showMemory(2)">Ver más</button>
+            </div>
+            <div>
+                <img src="img/imagen03.jpg.jpeg" alt="Recuerdo 3">
+                <button onclick="showMemory(3)">Ver más</button>
+            </div>
+            <div>
+                <img src="img/imagen04.jpg.jpeg" alt="Recuerdo 4">
+                <button onclick="showMemory(4)">Ver más</button>
+            </div>
+        </div>
+        <button onclick="goToProposal()">Siguiente</button>
+    </div>
+
+    <div class="container hidden" id="memoryDetailContainer">
+        <button onclick="backToMemories()">⬅ Volver</button>
+        <div id="memoryDescription" class="memoryDetail"></div>
+    </div>
+
+    <div class="container hidden" id="proposalContainer">
+        <h1>¿Quieres ser mi San Valentín? ❤️</h1>
+        <button onclick="celebrate()">Sí</button>
+        <button class="no" onmouseover="moveNo()">No</button>
+    </div>
+
+    <script>
+        function checkDate() {
+            let inputDate = document.getElementById("dateInput").value;
+            if (inputDate === "2023-11-17") {
+                document.getElementById("dateContainer").classList.add("hidden");
+                document.getElementById("memoriesContainer").classList.remove("hidden");
+            } else {
+                document.getElementById("errorMsg").style.display = "block";
+            }
+        }
+
+        function goToProposal() {
+            document.getElementById("memoriesContainer").classList.add("hidden");
+            document.getElementById("proposalContainer").classList.remove("hidden");
+        }
+
+        function showMemory(num) {
+            let descriptions = [
+                "Nuestro día de relajo fue increíble. Me encantó estar contigo: sol, piscina y tú. Verte sonreír conmigo en la piscina fue hermoso, y ese día no faltaron risas, mi amor. Gracias por regalarme un recuerdo hermoso. Te amo y siempre será así.",
+                "Halloween contigo, mi amor. Estabas muy hermosa ese día, aunque siempre lo estás. Verte sonreír es arte. Tu compañía me hace sentir en paz, como si estuviera en otro mundo donde solo soy feliz a tu lado. Mi vaquerita preciosa, gracias por regalarme momentos así a tu lado.",
+                "Cómo olvidar nuestro año de relación, un año donde cada momento fue hermoso y único, un año donde aprendí demasiado y entendí que la distancia no es impedimento para nuestro amor. Demostramos ser fuertes juntos y, a pesar de los altibajos, aquí estamos, mi amor. Me encanta estar en lugares nuevos contigo, perderme contigo los sábados y levantarme el domingo con todos los recuerdos de esa noche. Te amo, Saskya.",
+                "Primer 31 de diciembre juntos, ese día fue muy chistoso, juntos, Sasky. Nos divertimos mucho, y comenzar el año con la persona que quieres no se compara con nada. Un año nuevo lleno de cosas por hacer a tu lado, un año donde estaremos juntos, porque eso quiero. Quiero ser tu soporte cuando no tengas estabilidad, quiero ser la persona que te saque del caos por un rato, quiero que siempre seas tú la que me complementa y la persona que me enamoró de la nada. Por un 2025 juntos."
+            ];
+
+            document.getElementById("memoryDescription").textContent = descriptions[num - 1];
+            document.getElementById("memoriesContainer").classList.add("hidden");
+            document.getElementById("memoryDetailContainer").classList.remove("hidden");
+        }
+
+        function backToMemories() {
+            document.getElementById("memoryDetailContainer").classList.add("hidden");
+            document.getElementById("memoriesContainer").classList.remove("hidden");
+        }
+
+        function moveNo() {
+            let button = document.querySelector('.no');
+            let x = Math.random() * window.innerWidth * 0.6;
+            let y = Math.random() * window.innerHeight * 0.6;
+            button.style.position = "absolute";
+            button.style.left = `${x}px`;
+            button.style.top = `${y}px`;
+        }
+
+        function celebrate() {
+            document.body.innerHTML = '<h1 style="color:white; text-shadow: 2px 2px 10px red;">¡Sabía que dirías que sí! ❤️🎉</h1>';
+        }
+    </script>
+</body>
+</html>
